@@ -66,9 +66,35 @@ public class Gameplay extends JPanel implements KeyListener, ActionListener {
         g.dispose();
     }
 
+    public void paddleIntersect() {
+        if (isPlaying) {
+            if (new Rectangle(ballPosX, ballPosY, 20, 20).intersects(new Rectangle(playerX, 550, 100, 8))) {
+                ballDirY = -ballDirY;
+            }
+        }
+    }
+
+    public void frameIntersect() {
+        if (isPlaying) {
+            ballPosX += ballDirX;
+            ballPosY += ballDirY;
+            if (ballPosX < 0) {
+                ballDirX = -ballDirX;
+            }
+            if (ballPosY < 0) {
+                ballDirY = -ballDirY;
+            }
+            if (ballPosX > 660) {
+                ballDirX = -ballDirX;
+            }
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         time.start();
+        paddleIntersect();
+        frameIntersect();
         repaint();
     }
 
